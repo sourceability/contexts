@@ -1,0 +1,17 @@
+version: '3.8'
+
+services:
+  browser:
+    image: selenium/standalone-chrome:4.2.2-20220609
+    shm_size: "2g"
+    network_mode: "service:server"
+
+  server:
+    image: php:8.1
+    volumes:
+      - ".:/app"
+    ports:
+      - "8080:8080"
+      - "4444:4444"
+      - "7900:7900"
+    entrypoint: php -S 0.0.0.0:8080 -t /app/tests/fixtures/www
