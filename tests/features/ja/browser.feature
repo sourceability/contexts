@@ -50,12 +50,12 @@
     @javascript
     シナリオ: Frames testing
        前提 "/browser/frames.html" を表示している
-        もし 私が　"index" iframeにフォーカスする
+        もし 私が　"2" iframeにフォーカスする
         ならば 画面に "Visible" と表示されていること
 
         もし 私が　メインフレームにフォーカスする
 
-        もし 私が　"elements" iframeにフォーカスする
+        もし 私が　"1" iframeにフォーカスする
         ならば セレクトボックス"months_selector"は"january"を含むこと
 
     @javascript

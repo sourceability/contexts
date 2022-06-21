@@ -51,12 +51,12 @@ Feature: Browser Feature
     @javascript
     Scenario: Frames testing
         Given I am on "/browser/frames.html"
-        When I switch to iframe "index"
+        When I switch to iframe "2"
         Then I should see "Visible"
 
         When switch to main frame
 
-        When switch to iframe "elements"
+        When switch to iframe "1"
         Then the "months_selector" select box should contain "january"
 
     @javascript
