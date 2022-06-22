@@ -20,7 +20,8 @@ default:
             base_url: 'http://localhost:8080'
             files_path: 'tests/fixtures/files'
             goutte: ~
-            selenium2: ~
+            selenium2:
+                wd_host: 'http://localhost:4444/wd/hub'
             browser_name: 'chrome'
             sessions:
                 default:
