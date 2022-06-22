@@ -9,6 +9,7 @@ jobs:
     test:
         name: PHP ${{ matrix.php-version }} + Symfony ${{ matrix.symfony-version }}
         runs-on: ubuntu-20.04
+        timeout-minutes: 30
         continue-on-error: false
         strategy:
             fail-fast: false
