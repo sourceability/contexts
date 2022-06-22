@@ -7,12 +7,12 @@ on:
 
 jobs:
     test:
-        name: PHP ${{ matrix.php-version }} + Symfony ${{ matrix.symfony-version }}
+        name: PHP ${{ matrix.php-version }} + Symfony ${{ matrix.symfony-version }} + Behat Profile ${{ matrix.behat-profile }}
         runs-on: ubuntu-20.04
         timeout-minutes: 30
         continue-on-error: false
         strategy:
-            fail-fast: false
+            fail-fast: true
             matrix:
                 php-version:
                     - '7.4'
@@ -22,6 +22,9 @@ jobs:
                     - '4.4.*'
                     - '5.4.*'
                     - '6.0.*'
+                behat-profile:
+                    - 'default'
+                    - 'symfony2'
                 exclude:
                     - php-version: '7.4'
                       symfony-version: '6.0.*'
@@ -35,7 +38,7 @@ jobs:
                   coverage: none
                   ini-values: "memory_limit=-1"
                   php-version: ${{ matrix.php-version }}
-                  tools: composer:v2,behat
+                  tools: composer:v2
 
             - name: Validate composer.json
               run: composer validate --no-check-lock
@@ -54,4 +57,4 @@ jobs:
               run: bin/atoum
 
             - name: Behat
-              run: behat -fprogress --no-interaction
+              run: bin/behat -fprogress --tags="~@user" --no-interaction --profile=${{ matrix.behat-profile }}
