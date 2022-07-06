@@ -70,5 +70,5 @@ jobs:
 
             - name: Behat
               run: |
-                  php -S localhost:8080 -t tests/fixtures/www &
+                  php -S localhost:8080 -t tests/fixtures/www &> /dev/null &
                   bin/behat -fprogress --tags="~@user" --no-interaction
