@@ -23,6 +23,14 @@ jobs:
                 exclude:
                     - php-version: '7.4'
                       symfony-version: '6.0.*'
+        services:
+            browser:
+                image: selenium/standalone-chrome:4.2.2-20220609
+                ports:
+                  - "4444:4444"
+                  - "7900:7900"
+                options: >-
+                    --shm-size=2g
         steps:
             - name: Checkout
               uses: actions/checkout@v2
@@ -57,12 +65,10 @@ jobs:
             - name: Install dependencies
               run: composer install --prefer-dist --no-progress
 
-            - uses: isbang/compose-action@v1.1.0
-              with:
-                  down-flags: "--volumes"
-
             - name: Atoum
               run: bin/atoum
 
             - name: Behat
-              run: bin/behat -fprogress --tags="~@user" --no-interaction
+              run: |
+                  php -S localhost:8080 -t tests/fixtures/www &
+                  bin/behat -fprogress --tags="~@user" --no-interaction
