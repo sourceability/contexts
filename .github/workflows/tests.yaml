@@ -34,6 +34,9 @@ jobs:
                   ini-values: "memory_limit=-1"
                   php-version: ${{ matrix.php-version }}
                   tools: composer:v2
+              env:
+                  COMPOSER_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
 
             - name: Validate composer.json
               run: composer validate --no-check-lock
