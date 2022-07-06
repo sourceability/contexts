@@ -7,7 +7,7 @@ on:
 
 jobs:
     test:
-        name: PHP ${{ matrix.php-version }} + Symfony ${{ matrix.symfony-version }} + Behat Profile ${{ matrix.behat-profile }}
+        name: PHP ${{ matrix.php-version }} + Symfony ${{ matrix.symfony-version }}
         runs-on: ubuntu-20.04
         timeout-minutes: 30
         continue-on-error: false
@@ -22,9 +22,6 @@ jobs:
                     - '4.4.*'
                     - '5.4.*'
                     - '6.0.*'
-                behat-profile:
-                    - 'default'
-                    - 'symfony2'
                 exclude:
                     - php-version: '7.4'
                       symfony-version: '6.0.*'
@@ -57,4 +54,4 @@ jobs:
               run: bin/atoum
 
             - name: Behat
-              run: bin/behat -fprogress --tags="~@user" --no-interaction --profile=${{ matrix.behat-profile }}
+              run: bin/behat -fprogress --tags="~@user" --no-interaction

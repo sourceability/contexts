@@ -50,7 +50,7 @@ class RestContext extends BaseContext
                 throw new \Exception("You must provide a 'key' and 'value' column in your table node.");
             }
 
-            if (is_string($row['value']) && substr($row['value'], 0, 1) == '@') {
+            if (is_string($row['value']) && substr($row['value'], 0, 1) === '@') {
                 $files[$row['key']] = rtrim($this->getMinkParameter('files_path'), DIRECTORY_SEPARATOR).DIRECTORY_SEPARATOR.substr($row['value'],1);
             }
             else {

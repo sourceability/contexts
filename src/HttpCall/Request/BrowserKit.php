@@ -4,8 +4,10 @@ namespace Behatch\HttpCall\Request;
 
 use Behat\Mink\Driver\Goutte\Client as GoutteClient;
 use Behat\Mink\Mink;
+use Goutte\Client;
 use Symfony\Component\BrowserKit\Client as BrowserKitClient;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
+use function var_dump;
 
 class BrowserKit
 {
@@ -64,7 +66,9 @@ class BrowserKit
                 $file = new UploadedFile($file, $originalName);
             }
         }
+        unset($file);
 
+        /** @var Client $client */
         $client = $this->mink->getSession()->getDriver()->getClient();
 
         $client->followRedirects(false);

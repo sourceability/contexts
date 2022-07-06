@@ -29,6 +29,7 @@ Feature: Testing RESTContext
             | foofile | @lorem.txt |
         Then I should see "You have sent a POST request. "
         And I should see "1 parameter(s)"
+        And I should not see "No files received."
         And I should see "1 file(s)"
         And I should see "foo : bar"
         And I should see "foofile - name : lorem.txt"
