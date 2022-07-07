@@ -24,6 +24,7 @@ Make sure that you don't break anything with your changes by running the test
 suites:
 
 ```bash
+$> docker-compose up -d
 $> ./bin/atoum
 $> ./bin/behat
 ```

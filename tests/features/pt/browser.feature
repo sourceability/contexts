@@ -48,12 +48,12 @@ Funcionalidade: Browser
   @javascript
   Cenário: Testando frames
     Quando Eu estou em "/browser/frames.html"
-    E mudo para o iframe "index"
+    E mudo para o iframe "2"
     Então devo ver "Visible"
 
     Quando eu mudo para o frame principal
 
-    Quando mudo para o iframe "elements"
+    Quando mudo para o iframe "1"
     Então o select "months_selector" deve conter "january"
 
   @javascript

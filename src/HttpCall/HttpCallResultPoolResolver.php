@@ -25,9 +25,9 @@ class HttpCallResultPoolResolver implements ArgumentResolver
             foreach ($parameters as $parameter) {
                 if (
                     null !== $parameter->getType()
-                    && isset($this->dependencies[$parameter->getType()->toString()])
+                    && isset($this->dependencies[$parameter->getType()->__toString()])
                 ) {
-                    $arguments[$parameter->name] = $this->dependencies[$parameter->getType()->toString()];
+                    $arguments[$parameter->name] = $this->dependencies[$parameter->getType()->__toString()];
                 }
             }
         }

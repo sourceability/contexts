@@ -48,12 +48,12 @@ Fonctionnalité:
     @javascript
     Scénario:
         Étant donné je suis sur "/browser/frames.html"
-        Quand je bascule vers l'iframe "index"
+        Quand je bascule vers l'iframe "2"
         Alors je devrais voir "Visible"
 
         Quand je bascule vers le cadre principal
 
-        Quand je bascule vers le cadre "elements"
+        Quand je bascule vers le cadre "1"
         Alors la liste de sélection "months_selector" devrait contenir "january"
 
     @javascript

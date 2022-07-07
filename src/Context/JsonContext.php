@@ -5,7 +5,6 @@ namespace Behatch\Context;
 use Behat\Gherkin\Node\PyStringNode;
 
 use Behat\Gherkin\Node\TableNode;
-use Behat\Mink\Exception\ExpectationException;
 use Behatch\Json\Json;
 use Behatch\Json\JsonSchema;
 use Behatch\Json\JsonInspector;
@@ -273,6 +272,9 @@ class JsonContext extends BaseContext
 
         try {
             $node = $this->inspector->evaluate($json, $name);
+            if (null === $node) {
+                throw new \Exception('Node not found');
+            }
         } catch (\Exception $e) {
             throw new \Exception("The node '$name' does not exist.");
         }

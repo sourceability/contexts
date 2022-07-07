@@ -4,8 +4,11 @@ namespace Behatch\HttpCall\Request;
 
 use Behat\Mink\Driver\Goutte\Client as GoutteClient;
 use Behat\Mink\Mink;
+use Goutte\Client;
+use Symfony\Component\BrowserKit\AbstractBrowser;
 use Symfony\Component\BrowserKit\Client as BrowserKitClient;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
+use function var_dump;
 
 class BrowserKit
 {
@@ -61,10 +64,12 @@ class BrowserKit
     {
         foreach ($files as $originalName => &$file) {
             if (is_string($file)) {
-                $file = new UploadedFile($file, $originalName);
+                $file = ['tmp_name' => $file, 'name' => basename($file)];
             }
         }
+        unset($file);
 
+        /** @var Client $client */
         $client = $this->mink->getSession()->getDriver()->getClient();
 
         $client->followRedirects(false);
@@ -82,7 +87,7 @@ class BrowserKit
         if (method_exists($client, 'setHeader')) {
             $client->setHeader($name, $value);
         } else {
-            // Symfony\Component\BrowserKit\Client
+            // Symfony\Component\BrowserKit\AbstractBrowser
 
             /* taken from Behat\Mink\Driver\BrowserKitDriver::setRequestHeader */
             $contentHeaders = ['CONTENT_LENGTH' => true, 'CONTENT_MD5' => true, 'CONTENT_TYPE' => true];
@@ -133,7 +138,7 @@ class BrowserKit
 
     protected function resetHttpHeaders()
     {
-        /** @var GoutteClient|BrowserKitClient $client */
+        /** @var GoutteClient|AbstractBrowser $client */
         $client = $this->mink->getSession()->getDriver()->getClient();
 
         $client->setServerParameters([]);

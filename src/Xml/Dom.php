@@ -19,7 +19,13 @@ class Dom
     public function __toString()
     {
         $this->dom->formatOutput = true;
-        return $this->dom->saveXML();
+
+        $result = $this->dom->saveXML();
+        if ($result === false) {
+            $this->throwError();
+        }
+
+        return $result;
     }
 
     public function validate()
@@ -94,18 +100,15 @@ class Dom
 
     public function getNamespaces()
     {
-        $xml = simplexml_import_dom($this->dom);
-        return $xml->getNamespaces(true);
+        return simplexml_import_dom($this->dom)->getNamespaces(true);
     }
 
     private function throwError()
     {
         $error = libxml_get_last_error();
-        if (!empty($error)) {
-            // https://bugs.php.net/bug.php?id=46465
-            if ($error->message != 'Validation failed: no DTD found !') {
-                throw new \DomException($error->message . ' at line ' . $error->line);
-            }
+        // https://bugs.php.net/bug.php?id=46465
+        if (!empty($error) && $error->message !== 'Validation failed: no DTD found !') {
+            throw new \DomException($error->message . ' at line ' . $error->line);
         }
     }
 }
