@@ -65,3 +65,7 @@ jobs:
 
             - name: Behat
               run: bin/behat -fprogress --tags="~@user" --no-interaction
+
+            - name: Stop servers
+              run: docker-compose down --volumes
+              if: always() || failure()
