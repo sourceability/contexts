@@ -37,12 +37,6 @@ jobs:
               env:
                   COMPOSER_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-            - name: Setup Java
-              uses: actions/setup-java@v3
-              with:
-                  distribution: 'temurin'
-                  java-version: '17'
-
             - name: Get composer cache directory
               id: composer-cache
               run: echo "::set-output name=dir::$(composer config cache-files-dir)"
@@ -53,6 +47,9 @@ jobs:
                   path: ${{ steps.composer-cache.outputs.dir }}
                   key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
                   restore-keys: ${{ runner.os }}-composer-
+
+            - name: Start servers
+              run: docker-compose up -d
 
             - name: Validate composer.json
               run: composer validate --no-check-lock
@@ -67,7 +64,4 @@ jobs:
               run: bin/atoum
 
             - name: Behat
-              run: |
-                  java -jar bin/selenium-server-4.2.2.jar standalone &
-                  php -S localhost:8080 -t tests/fixtures/www &> /dev/null &
-                  bin/behat -fprogress --tags="~@user" --no-interaction
+              run: bin/behat -fprogress --tags="~@user" --no-interaction
